@@ -1,7 +1,5 @@
-export function getFullYear() {
-  return new Date().getFullYear();
-}
+export const getFullYear = () => new Date().getFullYear();
 
-export function getFooterCopy(isIndex) {
-  return isIndex ? 'ALX' : 'ALX main dashboard';
-}
+export const getFooterCopy = (isIndex) => (isIndex ? "ALX" : "ALX main dashboard");
+
+export const getLatestNotification = () => "<strong>Urgent requirement</strong> - complete by EOD";

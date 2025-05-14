@@ -1,5 +1,15 @@
 .Notifications {
-  border: 2px dashed #e0354b;
-  padding: 10px;
+  border: 2px dashed #e1484c;
+  padding: 20px;
+  position: relative;
+  width: fit-content;
   margin: 10px;
+}
+
+li[data-priority="default"] {
+  color: blue;
+}
+
+li[data-priority="urgent"] {
+  color: red;
 }
