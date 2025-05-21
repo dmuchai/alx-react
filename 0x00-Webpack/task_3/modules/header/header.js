@@ -1,10 +1,7 @@
-import $ from 'jquery';
-import '../header/header.css';
-import logo from '../../assets/holberton-logo.jpg';
+import "./header.css";
+const $ = require("jquery");
 
-console.log('Init header');
+$("body").append("<header></header>");
+$("header").append('<div id="logo"></div>', "<h1>ALX Dashboard</h1>");
 
-$('body').prepend('<div id="logo"></div>');
-$('#logo').css('background', `url(${logo}) no-repeat center center`);
-
-$('body').prepend('<h1>ALX Dashboard</h1>');
+console.log("Init header");
