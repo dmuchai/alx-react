@@ -25,12 +25,12 @@ class App extends Component {
   render() {
     const { isLoggedIn } = this.props;
     return (
-      <Fragment>
+      <div className="App">
         <Notifications listNotifications={listNotifications} />
         <Header />
         {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
         <Footer />
-      </Fragment>
+      </div>
     );
   }
 }
