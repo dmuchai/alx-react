@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
@@ -12,6 +12,7 @@ const listCourses = [
   { id: 2, name: 'Webpack', credit: 20 },
   { id: 3, name: 'React', credit: 40 },
 ];
+
 const listNotifications = [
   { id: 1, type: 'default', value: 'New course available' },
   { id: 2, type: 'urgent', value: 'New resume available' },
@@ -21,26 +22,45 @@ const listNotifications = [
 class App extends Component {
   constructor(props) {
     super(props);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown(e) {
+    if (e.ctrlKey && e.key === 'h') {
+      alert('Logging you out');
+      this.props.logOut();
+    }
+  }
+
   render() {
     const { isLoggedIn } = this.props;
     return (
-      <Fragment>
+      <div className="App">
         <Notifications listNotifications={listNotifications} />
         <Header />
         {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
         <Footer />
-      </Fragment>
+      </div>
     );
   }
 }
 
 App.defaultProps = {
   isLoggedIn: false,
+  logOut: () => {}, // default empty function
 };
 
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
+  logOut: PropTypes.func,
 };
 
 export default App;
