@@ -6,6 +6,10 @@ import PropTypes from 'prop-types';
 import NotificationItemShape from './NotificationItemShape';
 
 const Notifications = ({ displayDrawer, listNotifications }) => {
+  const markAsRead = (id) => {
+    console.log(`Notification ${id} has been marked as read`);
+  };
+
   return (
     <Fragment>
       <div className='menuItem'>
@@ -15,17 +19,20 @@ const Notifications = ({ displayDrawer, listNotifications }) => {
         <div className='Notifications'>
           <p>Here is the list of notifications</p>
           <ul>
-            {listNotifications.length === 0 && (
+            {listNotifications.length === 0 ? (
               <NotificationItem value='No new notification for now' />
+            ) : (
+              listNotifications.map((notification) => (
+                <NotificationItem
+                  key={notification.id}
+                  id={notification.id}
+                  type={notification.type}
+                  value={notification.value}
+                  html={notification.html}
+                  markAsRead={markAsRead}
+                />
+              ))
             )}
-            {listNotifications.map((notification) => (
-              <NotificationItem
-                key={notification.id}
-                type={notification.type}
-                value={notification.value}
-                html={notification.html}
-              />
-            ))}
           </ul>
           <button
             type='button'

@@ -4,7 +4,6 @@ import NotificationItem from './NotificationItem';
 
 describe('<NotificationItem />', () => {
   it('renders without crashing', () => {
-    const wrapper = shallow(<NotificationItem />);
     shallow(<NotificationItem />);
   });
 
@@ -17,7 +16,6 @@ describe('<NotificationItem />', () => {
   });
 
   it('renders html prop', () => {
-    const text = 'Here is the list of notifications';
     const wrapper = shallow(
       <NotificationItem html={{ __html: '<u>test</u>' }} />
     );
@@ -25,5 +23,19 @@ describe('<NotificationItem />', () => {
     expect(li.html()).toEqual(
       '<li data-notification-type="default"><u>test</u></li>'
     );
+  });
+
+  it('calls markAsRead with correct ID when clicked', () => {
+    const mockMarkAsRead = jest.fn();
+    const wrapper = shallow(
+      <NotificationItem
+        id={5}
+        type="default"
+        value="Test notification"
+        markAsRead={mockMarkAsRead}
+      />
+    );
+    wrapper.find('li').simulate('click');
+    expect(mockMarkAsRead).toHaveBeenCalledWith(5);
   });
 });
