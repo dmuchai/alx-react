@@ -12,6 +12,7 @@ const listCourses = [
   { id: 2, name: 'Webpack', credit: 20 },
   { id: 3, name: 'React', credit: 40 },
 ];
+
 const listNotifications = [
   { id: 1, type: 'default', value: 'New course available' },
   { id: 2, type: 'urgent', value: 'New resume available' },
@@ -19,14 +20,12 @@ const listNotifications = [
 ];
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const { isLoggedIn } = this.props;
+
     return (
       <Fragment>
-        <Notifications listNotifications={listNotifications} />
+        <Notifications displayDrawer={true} listNotifications={listNotifications} />
         <Header />
         {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
         <Footer />
