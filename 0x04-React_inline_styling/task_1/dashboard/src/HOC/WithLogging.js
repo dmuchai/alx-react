@@ -8,7 +8,6 @@ function WithLogging(WrappedComponent) {
     componentDidMount() {
       console.log(`Component ${componentName} is mounted`);
     }
-
     componentWillUnmount() {
       console.log(`Component ${componentName} is going to unmount`);
     }
@@ -17,7 +16,9 @@ function WithLogging(WrappedComponent) {
       return <WrappedComponent {...this.props} />;
     }
   }
+
   HOC.displayName = `WithLogging(${componentName})`;
+
   return HOC;
 }
 
