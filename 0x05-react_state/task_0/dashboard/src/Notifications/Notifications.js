@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import NotificationItem from './NotificationItem';
 import { getLatestNotification } from '../utils/utils';
 import { StyleSheet, css } from 'aphrodite';
+import closeIcon from '../assets/close-icon.png';
 
 class Notifications extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class Notifications extends React.Component {
               }}
             >
               <img
-                src="https://raw.githubusercontent.com/holbertonschool/0x05-React_state/master/task_0/dashboard/src/assets/close-icon.png"
+                src={closeIcon}
                 alt="close icon"
                 width="10px"
               />
