@@ -1,35 +1,50 @@
-import { bindActionCreators } from 'redux';
-import fetch from 'node-fetch';
+import { LOGIN, LOGOUT, DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER,
+  LOGIN_SUCCESS, LOGIN_FAILURE } from './uiActionTypes';
 
-import {
-  LOGIN, LOGOUT, DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER,
-  LOGIN_SUCCESS, LOGIN_FAILURE
-} from './uiActionTypes';
-
-export const login = (email, password) => ({
-  type: LOGIN,
-  user: { email, password },
-});
-
-export const logout = () => ({ type: LOGOUT });
-
-export const displayNotificationDrawer = () => ({ type: DISPLAY_NOTIFICATION_DRAWER });
-
-export const hideNotificationDrawer = () => ({ type: HIDE_NOTIFICATION_DRAWER });
-
-export const loginSuccess = () => ({ type: LOGIN_SUCCESS });
-
-export const loginFailure = () => ({ type: LOGIN_FAILURE });
-
-export const loginRequest = (email, password) => {
-  return async (dispatch) => {
-    dispatch(login(email, password));
-    try {
-      const response = await fetch('/login-success.json');
-      if (!response.ok) throw new Error();
-      dispatch(loginSuccess());
-    } catch (err) {
-      dispatch(loginFailure());
-    }
+export const login = (email, password) => {
+  return { 
+    type: LOGIN, 
+    user: {
+    email,
+    password
+    } 
   };
 };
+
+export const boundlogin = (email, password) => dispatch(login(email, password));
+
+export const logout = () => {
+    return { type: LOGOUT };
+};
+
+export const boundlogout = () => dispatch(logout());
+
+export const displayNotificationDrawer = () => {
+    return { type: DISPLAY_NOTIFICATION_DRAWER };
+};
+
+export const bounddisplayNotificationDrawer = () => dispatch(displayNotificationDrawer());
+
+export const hideNotificationDrawer = () => {
+    return { type: HIDE_NOTIFICATION_DRAWER };
+};
+
+export const boundhideNotificationDrawer = () => dispatch(hideNotificationDrawer());
+
+export const loginSuccess = () => {
+  return { type: LOGIN_SUCCESS }
+}
+
+export const loginFailure = () => {
+  return { type: LOGIN_FAILURE }
+}
+
+export const loginRequest = (email, password) => {
+  return function (dispatch) {
+    dispatch(login(email, password));
+    return fetch('http://localhost:3000/login-success.json')
+      .then((response) => response.json())
+      .then((json) => dispatch(loginSuccess()))
+      .catch((err) => dispatch(loginFailure()))
+  };
+}
