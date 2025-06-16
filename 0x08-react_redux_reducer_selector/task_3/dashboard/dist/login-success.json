@@ -1,0 +1,5 @@
+cat <<EOF > dist/login-success.json
+{
+  "status": "ok"
+}
+EOF
