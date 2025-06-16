@@ -15,13 +15,10 @@ const notification = new schema.Entity('notifications', {
   context: message
 });
 
-// Function to normalize notification data
-export const notificationsNormalizer = (data) => normalize(data, [notification]);
-
-// Normalize sample data
+// Normalize data
 const normalizedData = normalize(notificationsData, [notification]);
 
-// Export entities and helper
+// Export normalized data
 export { user, message, notification, normalizedData };
 
 // Filter function
