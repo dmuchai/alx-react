@@ -12,6 +12,7 @@ import { getLatestNotification } from "../utils/utils";
 import { StyleSheet, css } from "aphrodite";
 import { user, logOut } from "./AppContext";
 import AppContext from "./AppContext";
+import { displayNotificationDrawer, hideNotificationDrawer } from "../actions/uiActionCreators";
 
 const listCourses = [
   { id: 1, name: "ES6", credit: 60 },
@@ -189,4 +190,12 @@ export const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+// Redux actions → props (shorthand)
+const mapDispatchToProps = {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+};
+
+// Use Redux-connected App
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
