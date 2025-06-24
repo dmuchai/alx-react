@@ -1,24 +1,24 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { createStore, applyMiddleware } from "redux";
-import { Provider } from "react-redux";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import App from './App/App';
+import uiReducer from './reducers/uiReducer';
+
+import { legacy_createStore as createStore, applyMiddleware, compose } from 'redux';
 import { thunk } from 'redux-thunk';
-import { Map } from "immutable";
 
-import App from "./App/App";
-import uiReducer, { initialState } from "./reducers/uiReducer";
+// Enable Redux DevTools if available
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+// Create the store with middleware and DevTools support
 const store = createStore(
   uiReducer,
-  Map(initialState),
-  applyMiddleware(thunk)
+  composeEnhancers(applyMiddleware(thunk))
 );
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
 );
