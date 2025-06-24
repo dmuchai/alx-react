@@ -28,7 +28,7 @@ const NotificationItem = React.memo(function NotificationItem({
       <li
         className={typeStyle}
         data-notification-type={type}
-        dangerouslySetInnerHTML={html}
+	dangerouslySetInnerHTML={{ __html: html.__html }}
         onClick={() => markAsRead(id)}
       ></li>
     );
