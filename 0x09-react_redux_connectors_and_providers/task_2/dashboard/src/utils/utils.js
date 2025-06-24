@@ -5,8 +5,8 @@ export const getFullYear = () => {
 export const getFooterCopy = (isIndex) => {
   let res = undefined;
   isIndex
-    ? (res = 'Holberton School')
-    : (res = 'Holberton School main dashboard');
+    ? (res = 'ALX School')
+    : (res = 'ALX school main dashboard');
   return res;
 };
 
