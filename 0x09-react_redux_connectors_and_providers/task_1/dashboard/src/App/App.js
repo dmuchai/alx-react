@@ -12,7 +12,10 @@ import { getLatestNotification } from "../utils/utils";
 import { StyleSheet, css } from "aphrodite";
 import { user, logOut } from "./AppContext";
 import AppContext from "./AppContext";
-import { displayNotificationDrawer, hideNotificationDrawer } from "../actions/uiActionCreators";
+import {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+} from "../actions/uiActionCreators";
 
 const listCourses = [
   { id: 1, name: "ES6", credit: 60 },
@@ -32,8 +35,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.handleKeyCombination = this.handleKeyCombination.bind(this);
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
@@ -49,14 +50,6 @@ class App extends Component {
       alert("Logging you out");
       this.state.logOut();
     }
-  }
-
-  handleDisplayDrawer() {
-    // You will replace this with a Redux dispatch in Task 4
-  }
-
-  handleHideDrawer() {
-    // You will replace this with a Redux dispatch in Task 4
   }
 
   logIn(email, password) {
@@ -75,9 +68,9 @@ class App extends Component {
 
   markNotificationAsRead(id) {
     this.setState({
-      listNotifications: this.state.listNotifications.filter((notification) => {
-        return notification.id !== id;
-      }),
+      listNotifications: this.state.listNotifications.filter(
+        (notification) => notification.id !== id
+      ),
     });
   }
 
@@ -91,7 +84,7 @@ class App extends Component {
 
   render() {
     const { user, logOut, listNotifications } = this.state;
-    const { isLoggedIn, displayDrawer } = this.props;
+    const { isLoggedIn, displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
     const value = { user, logOut };
 
     return (
@@ -99,8 +92,8 @@ class App extends Component {
         <Notifications
           listNotifications={listNotifications}
           displayDrawer={displayDrawer}
-          handleDisplayDrawer={this.handleDisplayDrawer}
-          handleHideDrawer={this.handleHideDrawer}
+          handleDisplayDrawer={displayNotificationDrawer}
+          handleHideDrawer={hideNotificationDrawer}
           markNotificationAsRead={this.markNotificationAsRead}
         />
         <div className={css(styles.container)}>
@@ -123,13 +116,7 @@ class App extends Component {
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              type and scrambled it to make a type specimen book...
             </p>
           </BodySection>
 
@@ -141,6 +128,20 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  displayDrawer: PropTypes.bool,
+  displayNotificationDrawer: PropTypes.func,
+  hideNotificationDrawer: PropTypes.func,
+};
+
+App.defaultProps = {
+  isLoggedIn: false,
+  displayDrawer: false,
+  displayNotificationDrawer: () => {},
+  hideNotificationDrawer: () => {},
+};
 
 const cssVars = {
   mainColor: "#e01d3f",
@@ -156,16 +157,13 @@ const styles = StyleSheet.create({
     marginLeft: "8px",
     marginRight: "8px",
   },
-
   app: {
     borderBottom: `3px solid ${cssVars.mainColor}`,
   },
-
   appBody: {
     display: "flex",
     justifyContent: "center",
   },
-
   footer: {
     borderTop: `3px solid ${cssVars.mainColor}`,
     width: "100%",
@@ -182,7 +180,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// Redux state → props
 export const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.get("isUserLoggedIn"),
@@ -190,12 +187,7 @@ export const mapStateToProps = (state) => {
   };
 };
 
-// Redux actions → props (shorthand)
-const mapDispatchToProps = {
+export default connect(mapStateToProps, {
   displayNotificationDrawer,
   hideNotificationDrawer,
-};
-
-// Use Redux-connected App
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-
+})(App);
