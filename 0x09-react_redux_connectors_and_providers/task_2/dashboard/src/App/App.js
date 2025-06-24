@@ -10,12 +10,8 @@ import Footer from "../Footer/Footer";
 import PropTypes from "prop-types";
 import { getLatestNotification } from "../utils/utils";
 import { StyleSheet, css } from "aphrodite";
-import { user, logOut } from "./AppContext";
-import AppContext from "./AppContext";
-import {
-  displayNotificationDrawer,
-  hideNotificationDrawer,
-} from "../actions/uiActionCreators";
+import AppContext, { user as defaultUser } from "./AppContext";
+import { loginRequest, logout } from "../actions/uiActionCreators";
 
 const listCourses = [
   { id: 1, name: "ES6", credit: 60 },
@@ -35,12 +31,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.handleKeyCombination = this.handleKeyCombination.bind(this);
-    this.logIn = this.logIn.bind(this);
-    this.logOut = this.logOut.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
     this.state = {
-      user,
-      logOut: this.logOut,
+      user: defaultUser,
       listNotifications: listNotificationsInitialState,
     };
   }
@@ -48,22 +41,8 @@ class App extends Component {
   handleKeyCombination(e) {
     if (e.key === "h" && e.ctrlKey) {
       alert("Logging you out");
-      this.state.logOut();
+      this.props.logout();
     }
-  }
-
-  logIn(email, password) {
-    this.setState({
-      user: {
-        email,
-        password,
-        isLoggedIn: true,
-      },
-    });
-  }
-
-  logOut() {
-    this.setState({ user });
   }
 
   markNotificationAsRead(id) {
@@ -83,17 +62,17 @@ class App extends Component {
   }
 
   render() {
-    const { user, logOut, listNotifications } = this.state;
-    const { isLoggedIn, displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
-    const value = { user, logOut };
+    const { isLoggedIn, displayDrawer, login, logout } = this.props;
+    const { listNotifications } = this.state;
+    const value = { user: this.state.user, logOut: logout };
 
     return (
       <AppContext.Provider value={value}>
         <Notifications
           listNotifications={listNotifications}
           displayDrawer={displayDrawer}
-          handleDisplayDrawer={displayNotificationDrawer}
-          handleHideDrawer={hideNotificationDrawer}
+          handleDisplayDrawer={this.props.displayNotificationDrawer}
+          handleHideDrawer={this.props.hideNotificationDrawer}
           markNotificationAsRead={this.markNotificationAsRead}
         />
         <div className={css(styles.container)}>
@@ -103,7 +82,7 @@ class App extends Component {
           <div className={css(styles.appBody)}>
             {!isLoggedIn ? (
               <BodySectionWithMarginBottom title="Log in to continue">
-                <Login logIn={this.logIn} />
+                <Login logIn={login} />
               </BodySectionWithMarginBottom>
             ) : (
               <BodySectionWithMarginBottom title="Course list">
@@ -114,12 +93,9 @@ class App extends Component {
           <BodySection title="News from the School">
             <p>
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book...
+              industry...
             </p>
           </BodySection>
-
           <div className={css(styles.footer)}>
             <Footer />
           </div>
@@ -132,6 +108,8 @@ class App extends Component {
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
   displayDrawer: PropTypes.bool,
+  login: PropTypes.func,
+  logout: PropTypes.func,
   displayNotificationDrawer: PropTypes.func,
   hideNotificationDrawer: PropTypes.func,
 };
@@ -139,6 +117,8 @@ App.propTypes = {
 App.defaultProps = {
   isLoggedIn: false,
   displayDrawer: false,
+  login: () => {},
+  logout: () => {},
   displayNotificationDrawer: () => {},
   hideNotificationDrawer: () => {},
 };
@@ -180,6 +160,7 @@ const styles = StyleSheet.create({
   },
 });
 
+// Extract Redux state values
 export const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.get("isUserLoggedIn"),
@@ -187,7 +168,12 @@ export const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-  displayNotificationDrawer,
-  hideNotificationDrawer,
-})(App);
+// Connect Redux actions
+const mapDispatchToProps = {
+  login: loginRequest,
+  logout,
+  displayNotificationDrawer: () => ({ type: "DISPLAY_NOTIFICATION_DRAWER" }),
+  hideNotificationDrawer: () => ({ type: "HIDE_NOTIFICATION_DRAWER" }),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
