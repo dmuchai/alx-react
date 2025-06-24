@@ -5,10 +5,10 @@ it('getFullYear', () => {
   expect(getFullYear()).toEqual(new Date().getFullYear());
 });
 it('getFooterCopy with true', () => {
-  expect(getFooterCopy(true)).toEqual('Holberton School');
+  expect(getFooterCopy(true)).toEqual('ALX School');
 });
 it('getFooterCopy with false', () => {
-  expect(getFooterCopy(false)).toEqual('Holberton School main dashboard');
+  expect(getFooterCopy(false)).toEqual('ALX School main dashboard');
 });
 it('getLatestNotification', () => {
   expect(getLatestNotification()).toEqual(

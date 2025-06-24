@@ -6,7 +6,7 @@ export const getFooterCopy = (isIndex) => {
   let res = undefined;
   isIndex
     ? (res = 'ALX School')
-    : (res = 'ALX school main dashboard');
+    : (res = 'ALX School main dashboard');
   return res;
 };
 

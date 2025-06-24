@@ -12,7 +12,7 @@ import {
 const defaultState = Map({
   isNotificationDrawerVisible: false,
   isUserLoggedIn: false,
-  user: {},
+  user: null,
 });
 
 describe('uiReducer with Immutable.js', () => {
