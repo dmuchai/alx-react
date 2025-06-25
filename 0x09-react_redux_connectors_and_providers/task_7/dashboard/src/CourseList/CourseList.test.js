@@ -1,73 +1,65 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import CourseList from './CourseList';
+import React from "react";
+import { shallow, mount } from "enzyme";
+import configureStore from "redux-mock-store";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
+import ConnectedCourseList, { CourseList } from "./CourseList";
+import * as actions from "../actions/courseActionCreators";
 
-describe('<CourseList />', () => {
-  const wrapper = shallow(<CourseList />);
-  it('renders without crashing', () => {
-    expect(wrapper.exists());
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+
+describe("CourseList component (connected)", () => {
+  let store;
+
+  beforeEach(() => {
+    store = mockStore({
+      courses: {
+        entities: {
+          "1": { id: "1", name: "ES6", credit: 60, isSelected: false },
+          "2": { id: "2", name: "Webpack", credit: 20, isSelected: true },
+        },
+      },
+    });
   });
 
-  it('renders rows', () => {
-    const row = wrapper.find('CourseListRow');
-    expect(row.at(0).prop('textFirstCell')).toEqual('Available courses');
-    expect(row.at(0).prop('isHeader')).toEqual(true);
-    expect(row.at(1).prop('textFirstCell')).toEqual('Course name');
-    expect(row.at(1).prop('textSecondCell')).toEqual('Credit');
-    expect(row.at(1).prop('isHeader')).toEqual(true);
-    expect(row.at(2).prop('isHeader')).toEqual(false);
+  it("should dispatch fetchCourses on mount", () => {
+    const fetchCoursesSpy = jest.spyOn(actions, "fetchCourses").mockReturnValue(() => ({ type: "DUMMY" }));
+
+    mount(
+      <Provider store={store}>
+        <ConnectedCourseList />
+      </Provider>
+    );
+
+    expect(fetchCoursesSpy).toHaveBeenCalled();
+    fetchCoursesSpy.mockRestore();
   });
 });
 
-describe('listCourses with values', () => {
-  let listCourses = undefined;
-  beforeEach(() => {
-    listCourses = [
-      { id: 1, name: 'ES6', credit: 60 },
-      { id: 2, name: 'Webpack', credit: 20 },
-      { id: 3, name: 'React', credit: 40 },
-    ];
-  });
+describe("CourseList component (unconnected)", () => {
+  it("should call selectCourse and unSelectCourse from onChangeRow", () => {
+    const selectCourse = jest.fn();
+    const unSelectCourse = jest.fn();
 
-  it('rows', () => {
-    const wrapper = shallow(<CourseList listCourses={listCourses} />);
-    const row = wrapper.find('CourseListRow');
-    expect(row).toHaveLength(5);
-    expect(row.at(0).prop('textFirstCell')).toEqual('Available courses');
-    expect(row.at(0).prop('isHeader')).toEqual(true);
-    expect(row.at(1).prop('textFirstCell')).toEqual('Course name');
-    expect(row.at(1).prop('textSecondCell')).toEqual('Credit');
-    expect(row.at(1).prop('isHeader')).toEqual(true);
-    expect(row.at(2).prop('textFirstCell')).toEqual('ES6');
-    expect(row.at(2).prop('textSecondCell')).toEqual(60);
-    expect(row.at(2).prop('isHeader')).toEqual(false);
-    expect(row.at(3).prop('textFirstCell')).toEqual('Webpack');
-    expect(row.at(3).prop('textSecondCell')).toEqual(20);
-    expect(row.at(3).prop('isHeader')).toEqual(false);
-    expect(row.at(4).prop('textFirstCell')).toEqual('React');
-    expect(row.at(4).prop('textSecondCell')).toEqual(40);
-    expect(row.at(4).prop('isHeader')).toEqual(false);
-  });
-});
+    const wrapper = shallow(
+      <CourseList
+        listCourses={[
+          { id: "1", name: "ES6", credit: 60, isSelected: false },
+          { id: "2", name: "Webpack", credit: 20, isSelected: true },
+        ]}
+        fetchCourses={jest.fn()}
+        selectCourse={selectCourse}
+        unSelectCourse={unSelectCourse}
+      />
+    );
 
-describe('listCourses without values', () => {
-  let listCourses = undefined;
-  beforeEach(() => {
-    listCourses = [];
-  });
+    const instance = wrapper.instance();
 
-  it('empty', () => {
-    const wrapper = shallow(<CourseList listCourses={listCourses} />);
-    expect(wrapper.exists());
-    const row = wrapper.find('CourseListRow');
-    expect(row).toHaveLength(3);
-    expect(row.at(0).prop('textFirstCell')).toEqual('Available courses');
-    expect(row.at(0).prop('isHeader')).toEqual(true);
-    expect(row.at(1).prop('textFirstCell')).toEqual('Course name');
-    expect(row.at(1).prop('textSecondCell')).toEqual('Credit');
-    expect(row.at(1).prop('isHeader')).toEqual(true);
-    expect(row.at(2).prop('textFirstCell')).toEqual('No course available yet');
-    expect(row.at(2).prop('textSecondCell')).toEqual(null);
-    expect(row.at(2).prop('isHeader')).toEqual(false);
+    instance.onChangeRow("1", true);
+    expect(selectCourse).toHaveBeenCalledWith("1");
+
+    instance.onChangeRow("2", false);
+    expect(unSelectCourse).toHaveBeenCalledWith("2");
   });
 });
