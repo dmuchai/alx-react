@@ -1,0 +1,226 @@
+[
+  {
+    "id": "5debd76480edafc8af244228",
+    "author": {
+      "id": "5debd764f8452ef92346c772",
+      "name": { "first": "Nixon", "last": "Baker" },
+      "email": "nixon.baker@holberton.nz",
+      "age": 27,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "efb6c485-00f7-4fdf-97cc-5e12d14d6c41",
+      "isRead": false,
+      "type": "default",
+      "value": "Cursus risus at ultrices mi."
+    }
+  },
+  {
+    "id": "5debd764507712e7a1307303",
+    "author": {
+      "id": "5debd764f8452ef92346c772",
+      "name": { "first": "Nixon", "last": "Baker" },
+      "email": "nixon.baker@holberton.nz",
+      "age": 27,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "deca5a76-ad3b-4c90-88c2-cd3ba6c53d49",
+      "isRead": false,
+      "type": "urgent",
+      "value": "Morbi leo urna molestie at elementum eu facilisis sed odio."
+    }
+  },
+  {
+    "id": "5debd76444dd4dafea89d53b",
+    "author": {
+      "id": "5debd764a7c57c7839d722e9",
+      "name": { "first": "Poole", "last": "Sanders" },
+      "email": "poole.sanders@holberton.nz",
+      "age": 25,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "1cefab98-5c34-4c3b-a456-cb8b0a2a24f1",
+      "isRead": false,
+      "type": "urgent",
+      "value": "Porttitor massa id neque aliquam vestibulum morbi blandit cursus risus."
+    }
+  },
+  {
+    "id": "5debd76485ee4dfd1284f97b",
+    "author": {
+      "id": "5debd764f8452ef92346c772",
+      "name": { "first": "Nixon", "last": "Baker" },
+      "email": "nixon.baker@holberton.nz",
+      "age": 27,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "3e1b9f3b-9043-4b15-8011-8592ad567d7f",
+      "isRead": false,
+      "type": "default",
+      "value": "Elementum eu facilisis sed odio morbi quis commodo odio aenean."
+    }
+  },
+  {
+    "id": "5debd7644e561e022d66e61a",
+    "author": {
+      "id": "5debd764a7c57c7839d722e9",
+      "name": { "first": "Poole", "last": "Sanders" },
+      "email": "poole.sanders@holberton.nz",
+      "age": 25,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "dec049b2-06c9-4ccb-8a6a-b22b9d2f3d89",
+      "isRead": false,
+      "type": "urgent",
+      "value": "Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+    }
+  },
+  {
+    "id": "5debd7644aaed86c97bf9d5e",
+    "author": {
+      "id": "5debd764a7c57c7839d722e9",
+      "name": { "first": "Poole", "last": "Sanders" },
+      "email": "poole.sanders@holberton.nz",
+      "age": 25,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "23c27f6e-c0f6-4b6b-b9b0-994b7023b9bb",
+      "isRead": true,
+      "type": "default",
+      "value": "Tellus in hac habitasse platea dictumst vestibulum rhoncus est."
+    }
+  },
+  {
+    "id": "5debd76413f0d5e5429c28a0",
+    "author": {
+      "id": "5debd764a7c57c7839d722e9",
+      "name": { "first": "Poole", "last": "Sanders" },
+      "email": "poole.sanders@holberton.nz",
+      "age": 25,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "478c5f11-67f9-4cc8-b760-7e0d3a6b7d93",
+      "isRead": false,
+      "type": "urgent",
+      "value": "Ut etiam sit amet nisl purus in mollis nunc sed id."
+    }
+  },
+  {
+    "id": "5debd7642e815cd350407777",
+    "author": {
+      "id": "5debd764f8452ef92346c772",
+      "name": { "first": "Nixon", "last": "Baker" },
+      "email": "nixon.baker@holberton.nz",
+      "age": 27,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "3068c575-d619-40af-bf12-dece1ee18dd3",
+      "isRead": false,
+      "type": "default",
+      "value": "Id neque aliquam vestibulum morbi blandit cursus risus."
+    }
+  },
+  {
+    "id": "5debd764c1127bc5a490a4d0",
+    "author": {
+      "id": "5debd764f8452ef92346c772",
+      "name": { "first": "Nixon", "last": "Baker" },
+      "email": "nixon.baker@holberton.nz",
+      "age": 27,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "1d24ed2b-f8e8-48a3-a78f-9c2d2e302d3c",
+      "isRead": true,
+      "type": "default",
+      "value": "Tellus mauris a diam maecenas sed enim ut sem viverra."
+    }
+  },
+  {
+    "id": "5debd7646ef31e0861ec1cab",
+    "author": {
+      "id": "5debd764a7c57c7839d722e9",
+      "name": { "first": "Poole", "last": "Sanders" },
+      "email": "poole.sanders@holberton.nz",
+      "age": 25,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "b2a57f2b-b944-4d5a-9e8b-1f84d51e4413",
+      "isRead": false,
+      "type": "urgent",
+      "value": "Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio."
+    }
+  },
+  {
+    "id": "5debd764a4f11eabef05a81d",
+    "author": {
+      "id": "5debd764f8452ef92346c772",
+      "name": { "first": "Nixon", "last": "Baker" },
+      "email": "nixon.baker@holberton.nz",
+      "age": 27,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "f644a8b1-d9f7-4f5b-a9f3-3de21d8e9913",
+      "isRead": false,
+      "type": "default",
+      "value": "Semper viverra nam libero justo laoreet sit amet cursus."
+    }
+  },
+  {
+    "id": "5debd764af0fdd1fc815ad9b",
+    "author": {
+      "id": "5debd764a7c57c7839d722e9",
+      "name": { "first": "Poole", "last": "Sanders" },
+      "email": "poole.sanders@holberton.nz",
+      "age": 25,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "3b93e9a3-27ad-4e25-8678-57f80f885fd0",
+      "isRead": true,
+      "type": "urgent",
+      "value": "Facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui."
+    }
+  },
+  {
+    "id": "5debd76468cb5b277fd125f4",
+    "author": {
+      "id": "5debd764a7c57c7839d722e9",
+      "name": { "first": "Poole", "last": "Sanders" },
+      "email": "poole.sanders@holberton.nz",
+      "age": 25,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "219de490-a118-4d89-82f5-a53f52bdb3c3",
+      "isRead": false,
+      "type": "default",
+      "value": "Amet est placerat in egestas erat imperdiet sed euismod nisi."
+    }
+  },
+  {
+    "id": "5debd764de9fa684468cdc0b",
+    "author": {
+      "id": "5debd764f8452ef92346c772",
+      "name": { "first": "Nixon", "last": "Baker" },
+      "email": "nixon.baker@holberton.nz",
+      "age": 27,
+      "picture": "http://placehold.it/32x32"
+    },
+    "context": {
+      "guid": "0192b402-e81c-4e8c-bbae-46665fc5e7e8",
+      "isRead": true,
+      "type": "urgent",
+      "value": "Velit egestas dui id ornare arcu odio ut sem nulla."
+    }
+  }
+]
