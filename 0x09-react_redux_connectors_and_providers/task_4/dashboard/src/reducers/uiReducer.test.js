@@ -1,19 +1,11 @@
-import { Map } from 'immutable';
-import uiReducer from './uiReducer';
+import uiReducer, { defaultState } from './uiReducer';
 import {
   DISPLAY_NOTIFICATION_DRAWER,
   HIDE_NOTIFICATION_DRAWER,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
-  SELECT_COURSE,
 } from '../actions/uiActionTypes';
-
-const defaultState = Map({
-  isNotificationDrawerVisible: false,
-  isUserLoggedIn: false,
-  user: null,
-});
 
 describe('uiReducer with Immutable.js', () => {
   it('should return initial state when no action is passed', () => {
@@ -22,7 +14,7 @@ describe('uiReducer with Immutable.js', () => {
   });
 
   it('should return initial state when irrelevant action is passed', () => {
-    const state = uiReducer(undefined, { type: SELECT_COURSE });
+    const state = uiReducer(undefined, { type: 'UNKNOWN' });
     expect(state.toJS()).toEqual(defaultState.toJS());
   });
 

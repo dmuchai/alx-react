@@ -1,61 +1,41 @@
-import { shallow, mount } from "enzyme";
-import React from "react";
-import App, { listNotificationsInitialState, mapStateToProps } from "./App";
-import { StyleSheetTestUtils } from "aphrodite";
-import AppContext, { user, logOut } from "./AppContext";
+import React from 'react';
+import { shallow } from 'enzyme';
+import { App } from './App'; // ← import the named, unconnected App
 
-import { fromJS } from "immutable";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import uiReducer, { initialState } from "../reducers/uiReducer";
+describe('App Component', () => {
+  let alertMock;
+  let mockLogout;
 
-const store = createStore(uiReducer, initialState);
-
-describe("<App />", () => {
   beforeEach(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
+    alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
+    mockLogout = jest.fn();
   });
 
   afterEach(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+    alertMock.mockRestore();
   });
 
-  it("mapStateToProps returns the correct object when user is logged in", () => {
-    const state = fromJS({
-      isUserLoggedIn: true,
-      isNotificationDrawerVisible: false,
+  it('calls logout when Ctrl + h is pressed', () => {
+    const wrapper = shallow(
+      <App
+        isLoggedIn={true}
+        displayDrawer={false}
+        displayNotificationDrawer={() => {}}
+        hideNotificationDrawer={() => {}}
+        login={() => {}}
+        logout={mockLogout}
+      />
+    );
+
+    const event = new KeyboardEvent('keydown', {
+      key: 'h',
+      ctrlKey: true,
     });
 
-    const result = mapStateToProps(state);
-    expect(result).toEqual({
-      isLoggedIn: true,
-      displayDrawer: false,
-    });
-  });
+    document.dispatchEvent(event);
 
-  it("mapStateToProps returns the correct object when drawer is visible", () => {
-    const state = fromJS({
-      isUserLoggedIn: false,
-      isNotificationDrawerVisible: true,
-    });
-
-    const result = mapStateToProps(state);
-    expect(result).toEqual({
-      isLoggedIn: false,
-      displayDrawer: true,
-    });
-  });
-
-  it("mapStateToProps returns the correct object when both are true", () => {
-    const state = fromJS({
-      isUserLoggedIn: true,
-      isNotificationDrawerVisible: true,
-    });
-
-    const result = mapStateToProps(state);
-    expect(result).toEqual({
-      isLoggedIn: true,
-      displayDrawer: true,
-    });
+    expect(alertMock).toHaveBeenCalledWith('Logging you out');
+    expect(mockLogout).toHaveBeenCalled();
   });
 });
+

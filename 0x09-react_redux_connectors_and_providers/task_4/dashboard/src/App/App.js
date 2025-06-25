@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
 
 export const mapStateToProps = (state) => {
   return {
-    isLoggedIn: state.ui.isUserLoggedIn,
-    displayDrawer: state.ui.isNotificationDrawerVisible,
+    isLoggedIn: state.getIn(['ui', 'isUserLoggedIn']),
+    displayDrawer: state.getIn(['ui', 'isNotificationDrawerVisible']),
   };
 };
 
