@@ -24,7 +24,7 @@ Footer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.ui.get("user"),
+    user: state.ui.user,
   };
 };
 
