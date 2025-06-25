@@ -1,27 +1,23 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, Component } from "react";
+import { connect } from "react-redux";
+import {
+  fetchNotifications,
+  markAsAread,
+} from "../actions/notificationActionCreators";
 import NotificationItem from "./NotificationItem";
+import { getUnreadNotifications } from "../selectors/notificationSelector";
 import PropTypes from "prop-types";
-import NotificationItemShape from "./NotificationItemShape";
 import closeIcon from "../assets/close-icon.png";
 import { StyleSheet, css } from "aphrodite";
 
-class Notifications extends PureComponent {
+export class Notifications extends Component {
   constructor(props) {
     super(props);
-    // this.markAsRead = this.markAsRead.bind(this);
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   return (
-  //     nextProps.listNotifications.length >
-  //       this.props.listNotifications.length ||
-  //     nextProps.displayDrawer !== this.props.displayDrawer
-  //   );
-  // }
-
-  // markAsRead(id) {
-  //   console.log(`Notification ${id} has been marked as read`);
-  // }
+  componentDidMount() {
+    this.props.fetchNotifications();
+  }
 
   render() {
     const {
@@ -68,23 +64,30 @@ class Notifications extends PureComponent {
               Here is the list of notifications
             </p>
             <ul className={css(styles.notificationsUL)}>
-              {listNotifications.length === 0 && (
+              {(!listNotifications || listNotifications.count() === 0) && (
                 <NotificationItem
                   type="noNotifications"
                   value="No new notifications for now"
                 />
               )}
 
-              {listNotifications.map((notification) => (
-                <NotificationItem
-                  key={notification.id}
-                  id={notification.id}
-                  type={notification.type}
-                  value={notification.value}
-                  html={notification.html}
-                  markAsRead={markNotificationAsRead}
-                />
-              ))}
+              {listNotifications &&
+                listNotifications.valueSeq().map((notification) => {
+                  let html = notification.get("html");
+
+                  if (html) html = html.toJS();
+
+                  return (
+                    <NotificationItem
+                      key={notification.get("guid")}
+                      id={notification.get("guid")}
+                      type={notification.get("type")}
+                      value={notification.get("value")}
+                      html={html}
+                      markAsRead={markNotificationAsRead}
+                    />
+                  );
+                })}
             </ul>
           </div>
         )}
@@ -95,15 +98,16 @@ class Notifications extends PureComponent {
 
 Notifications.defaultProps = {
   displayDrawer: false,
-  listNotifications: [],
+  listNotifications: null,
   handleDisplayDrawer: () => {},
   handleHideDrawer: () => {},
   markNotificationAsRead: () => {},
+  fetchNotifications: () => {},
 };
 
 Notifications.propTypes = {
   displayDrawer: PropTypes.bool,
-  listNotifications: PropTypes.arrayOf(NotificationItemShape),
+  listNotifications: PropTypes.object,
   handleDisplayDrawer: PropTypes.func,
   handleHideDrawer: PropTypes.func,
   markNotificationAsRead: PropTypes.func,
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
   },
 
   notifications: {
-    float: "right",
+    // float: "right",
     // border: `3px dashed ${cssVars.mainColor}`,
     padding: "10px",
     marginBottom: "20px",
@@ -223,4 +227,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Notifications;
+const mapStateToProps = (state) => {
+  const unreadNotifications = getUnreadNotifications(state);
+
+  return {
+    listNotifications: unreadNotifications,
+  };
+};
+
+const mapDispatchToProps = {
+  fetchNotifications,
+  markNotificationAsRead: markAsAread,
+};
+
+// export default Notifications;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
