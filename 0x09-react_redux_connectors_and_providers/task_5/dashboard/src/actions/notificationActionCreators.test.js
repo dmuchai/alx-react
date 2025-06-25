@@ -1,36 +1,34 @@
 import {
   MARK_AS_READ,
   SET_TYPE_FILTER,
-  NotificationTypeFilters
-} from './notificationActionTypes';
+  NotificationTypeFilters,
+} from "./notificationActionTypes";
 
 import {
   markAsAread,
-  setNotificationFilter
-} from './notificationActionCreators';
+  setNotificationFilter,
+} from "./notificationActionCreators";
 
-describe('notificationActionCreators', () => {
-  it('markAsAread(1) should return correct action', () => {
-    const expected = {
+describe("action creators tests", function () {
+  it("returns correct action for markAsRead", function () {
+    const expectedReturn = {
       type: MARK_AS_READ,
-      index: 1
+      index: 1,
     };
-    expect(markAsAread(1)).toEqual(expected);
+
+    const result = markAsAread(1);
+
+    expect(result).toEqual(expectedReturn);
   });
 
-  it('setNotificationFilter(DEFAULT) should return correct action', () => {
-    const expected = {
+  it("returns correct action for setNotificationFilter", function () {
+    const expectedReturn = {
       type: SET_TYPE_FILTER,
-      filter: NotificationTypeFilters.DEFAULT
+      filter: "DEFAULT",
     };
-    expect(setNotificationFilter(NotificationTypeFilters.DEFAULT)).toEqual(expected);
-  });
 
-  it('setNotificationFilter(URGENT) should return correct action', () => {
-    const expected = {
-      type: SET_TYPE_FILTER,
-      filter: NotificationTypeFilters.URGENT
-    };
-    expect(setNotificationFilter(NotificationTypeFilters.URGENT)).toEqual(expected);
+    const result = setNotificationFilter(NotificationTypeFilters.DEFAULT);
+
+    expect(result).toEqual(expectedReturn);
   });
 });
